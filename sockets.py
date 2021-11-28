@@ -26,7 +26,7 @@ app = Flask(__name__)
 sockets = Sockets(app)
 app.debug = True
 
-# some of the code are borrowed from github
+# some of the code are borrowed from professor Abram Hindle's github
 # source: https://github.com/uofa-cmput404/cmput404-slides/blob/master/examples/WebSocketsExamples/broadcaster.py
 
 clients = list()
@@ -60,11 +60,11 @@ class World:
         entry = self.space.get(entity,dict())
         entry[key] = value
         self.space[entity] = entry
-        self.update_listeners( entity )
+        self.update_listeners(entity)
 
     def set(self, entity, data):
         self.space[entity] = data
-        self.update_listeners( entity )
+        self.update_listeners(entity)
 
     def update_listeners(self, entity):
         '''update the set listeners'''
@@ -101,7 +101,7 @@ def read_ws(ws,client):
     try:
         while True:
             msg = ws.receive()
-            if msg:
+            if msg is not None:
                 content = json.loads(msg)
                 for entity in content.keys():
                     myWorld.set(entity, content[entity])
